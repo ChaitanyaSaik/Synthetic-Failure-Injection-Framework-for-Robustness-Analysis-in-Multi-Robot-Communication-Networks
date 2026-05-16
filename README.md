@@ -5,8 +5,6 @@ SFINet v2 is a lightweight, Python-native research framework for analyzing commu
 The framework simulates realistic communication failures inside distributed robot networks and studies how failures propagate through different network topologies under dynamic conditions.
 
 This project was developed as a research-oriented benchmark framework suitable for:
-- IEEE student conferences
-- Scopus-indexed conference submissions
 - Robotics communication research
 - Network robustness analysis
 - Synthetic benchmarking studies

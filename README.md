@@ -409,12 +409,5 @@ Developed for:
 - Network Robustness Analysis
 - IEEE/Scopus Research Publication
 
+# Author Name: Chaitanya Sai Kurapati (chaitanyasaikurapati@gmail.com)
 ---
-
-# License
-
-This project is intended for:
-- Academic research
-- Educational use
-- Experimental benchmarking
-

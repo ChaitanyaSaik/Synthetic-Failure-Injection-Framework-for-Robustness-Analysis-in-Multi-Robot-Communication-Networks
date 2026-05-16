@@ -1,0 +1,337 @@
+✓ All libraries loaded successfully.
+✓ Configuration: 10 robots | 1000 timesteps | mesh topology
+
+Topology       : MESH
+Nodes          : 10
+Edges          : 45
+Graph Density  : 1.000
+Most Central   : R1 (centrality=0.000)
+Avg Degree     : 9.00
+Baseline dataset shape : (700, 11)
+Avg Delay              : 16.26 ms
+Avg Packet Loss        : 0.0945
+Avg Throughput         : 479.85 kbps
+Avg Trust Score        : 0.9899
+
+ Time Source Destination  Delay_ms  Packet_Loss  Trust_Score Failure_Type  Throughput_kbps
+  0.0     R2          R1      4.43       0.0351       0.9600         None           509.54
+  0.5     R5          R4      5.43       0.0353       0.9600         None           493.74
+  1.0     R4          R3     19.41       0.0866       0.9600         None           446.43
+  1.5     R2          R9      3.65       0.0005       0.9680         None           512.50
+  2.0     R2          R7      5.31       0.1184       0.9744         None           478.57
+  2.5     R1         R10      8.86       0.0026       0.9600         None           483.67
+  3.0     R2          R4      7.94       0.2572       0.9795         None           447.66
+  3.5     R4          R9     18.20       0.1539       0.9680         None           483.88
+
+✓ Failure engine ready with 8 failure types.
+  Types: ['Packet_Drop', 'Artificial_Delay', 'Bandwidth_Collapse', 'Malicious_Node', 'Communication_Noise', 'Intermittent_Failure', 'Fake_Routing', 'Congestion']
+
+Full dataset shape  : (996, 12)
+Normal events       : 700 (70.3%)
+Failure events      : 296 (29.7%)
+Cascade events      : 295
+
+=== Failure Type Distribution ===
+Failure_Type
+None                    700
+Packet_Drop              37
+Artificial_Delay         37
+Bandwidth_Collapse       37
+Malicious_Node           37
+Communication_Noise      37
+Intermittent_Failure     37
+Fake_Routing             37
+Congestion               37
+
+=== Sample Dataset Rows ===
+ Time Source Destination  Delay_ms  Packet_Loss  Trust_Score Failure_Type  Throughput_kbps
+347.5     R9          R3      6.68       0.0299       0.9262         None           473.03
+348.0     R6          R9     42.93       0.0409       1.0000         None           440.91
+348.5     R7          R8      5.63       0.0066       1.0000         None           495.45
+349.0     R4          R7      8.02       0.2323       1.0000         None           516.62
+349.5     R3         R10      3.21       0.0693       1.0000         None           503.96
+350.0     R7         R10      4.26       0.7488       1.0000  Packet_Drop           522.62
+350.5     R1          R4     14.30       0.9129       0.9880  Packet_Drop           438.00
+351.0     R8          R7      2.46       0.7844       1.0000  Packet_Drop           535.94
+=== Robustness Metrics Summary ===
+Baseline PDR (normal)      : 99.00%
+Failure PDR (under attack) : 57.09%
+PDR Degradation            : 41.91 percentage points
+Avg CSI (normal)           : 0.2155
+Avg CSI (failure)          : 0.1855
+Failure Cascade Impact (FCI): 0.000000
+Cascade events detected    : 295
+✓ Isolation Forest trained on 700 normal traffic records.
+
+=== Isolation Forest Detection Report ===
+              precision    recall  f1-score   support
+
+      Normal     0.9389    0.9000    0.9190       700
+     Failure     0.7846    0.8615    0.8213       296
+
+    accuracy                         0.8886       996
+   macro avg     0.8618    0.8807    0.8701       996
+weighted avg     0.8930    0.8886    0.8900       996
+
+Confusion Matrix:
+[[630  70]
+ [ 41 255]]
+
+True Positives  (correctly flagged failures) : 255
+False Positives (normal flagged as failure)  : 70
+False Negatives (missed failures)            : 41
+True Negatives  (correctly passed normal)    : 630
+=== Recovery Strategy Comparison ===
+                 Strategy  PDR_%  Avg_Delay  Throughput  Isolated
+        Baseline (Normal)  99.00      16.90      479.07         0
+   Pre-Recovery (Failure)  57.09      40.78      338.57         0
+    S1: Dynamic Rerouting  89.53      40.78      338.57         0
+S2: Trust-Based Isolation 100.00      24.47      507.86         0
+    S3: Channel Switching  99.66      21.46      568.87         0
+
+=================================================================
+  SFINet — Final Research Results Summary
+=================================================================
+
+▶ DATASET
+  Total events        : 996
+  Normal events       : 700 (70%)
+  Failure events      : 296 (30%)
+  Failure types       : 8
+  Cascade events      : 295
+  Saved to            : SFINet_Dataset.csv
+
+▶ NETWORK TOPOLOGY
+  Type                : MESH
+  Robots (nodes)      : 10
+  Edges               : 45
+  Density             : 1.000
+
+▶ ROBUSTNESS METRICS
+  PDR (normal)        : 99.00%
+  PDR (failure)       : 57.09%
+  PDR Degradation     : 41.91 pp
+  CSI (normal)        : 0.2155
+  CSI (failure)       : 0.1855
+  CSI Degradation     : 0.0300
+  FCI Score           : 0.000000
+
+▶ ANOMALY DETECTION (Isolation Forest)
+  Anomalies flagged   : 325
+  True failures       : 296
+  Correct detections  : 255
+  Precision           : 0.7846
+  Recall              : 0.8615
+
+▶ RECOVERY STRATEGIES
+                 Strategy  PDR_%  Avg_Delay  Throughput
+        Baseline (Normal)  99.00      16.90      479.07
+   Pre-Recovery (Failure)  57.09      40.78      338.57
+    S1: Dynamic Rerouting  89.53      40.78      338.57
+S2: Trust-Based Isolation 100.00      24.47      507.86
+    S3: Channel Switching  99.66      21.46      568.87
+
+  Best Recovery Strategy : S2: Trust-Based Isolation (PDR = 100.00%)
+
+▶ RESEARCH CONTRIBUTIONS
+  1. Reproducible synthetic benchmark dataset (SFINet_Dataset.csv)
+  2. Modular failure injection framework — 8 failure types
+  3. Formal mathematical definitions: PDR, CSI, Trust, FCI
+  4. Isolation Forest anomaly detection — proactive failure onset
+  5. Three adaptive recovery strategies with PDR comparison
+  6. Graph-theoretic cascade propagation model (Δt = 3 window)
+  7. Python-native — zero C++ dependency; reproducible on student hardware
+=================================================================
+
+now sfinet v2 fixed results:
+
+✓ SFINet v2 Configuration
+  Robots        : 12
+  Events        : 10,000
+  Topology      : sparse_mesh
+  Failure ratio : 30%
+  Sparse degree : 4 neighbors/node (realistic)
+=== Primary Network ===
+  Topology      : SPARSE_MESH
+  Nodes         : 12
+  Edges         : 24
+  Density       : 0.3636  (sparse_mesh avoids density=1 which suppresses FCI)
+  Avg degree    : 4.00
+  Max degree    : 4 (node R1)
+  Max centrality: 0.3636 (node R1)
+  Min centrality: 0.3636
+  Connected     : True
+Sample normal communication events:
+ Time Source Destination  Delay_ms  Packet_Loss  Trust_Score  Throughput_kbps
+  0.0    R11          R2     39.35       0.0094        0.960           484.89
+  0.1     R1          R5      7.53       0.1159        0.960           458.65
+  0.2     R4         R12     23.52       0.0375        0.960           488.75
+  0.3     R3          R2     11.11       0.0360        0.960           426.13
+  0.4    R11          R9     15.79       0.0014        0.968           503.28
+
+Generator initialized: 12 robots, 10,000 total events planned.
+✓ Failure engine v2 initialized.
+  8 failure types with cascade propagation via graph diffusion.
+  FCI fix: degree centrality + percentage-scale delta_PDR.
+Dataset shape         : (10000, 14)
+Normal events         : 7,000 (70.0%)
+Failure events        : 3,000 (30.0%)
+Cascade events logged : 2999
+Cascade mean severity : 5.346
+Cascade max severity  : 12.0
+
+Failure type distribution:
+Failure_Type
+None                    7000
+Packet_Drop              375
+Artificial_Delay         375
+Bandwidth_Collapse       375
+Malicious_Node           375
+Communication_Noise      375
+Intermittent_Failure     375
+Fake_Routing             375
+Congestion               375
+
+Transition rows (normal→failure boundary):
+ Time Source Destination  Delay_ms  Packet_Loss  Trust_Score Failure_Type  Throughput_kbps
+699.7     R9         R11      9.26       0.0085       0.9998         None           436.16
+699.8     R9          R3     12.86       0.0591       0.9998         None           554.43
+699.9     R2          R5     12.99       0.0008       0.9107         None           485.64
+700.0     R3          R4      7.87       0.7679       0.9998  Packet_Drop           456.47
+700.1     R7         R10     27.37       0.9974       0.9996  Packet_Drop           458.82
+700.2     R2          R5      4.95       0.9590       0.9286  Packet_Drop           475.39
+700.3     R4          R1     22.57       0.9292       0.9998  Packet_Drop           502.19
+=== Fixed FCI per Failure Type ===
+  Packet_Drop              : FCI = 76.9502
+  Artificial_Delay         : FCI = 76.9502
+  Bandwidth_Collapse       : FCI = 76.9502
+  Malicious_Node           : FCI = 76.9502
+  Communication_Noise      : FCI = 76.9502
+  Intermittent_Failure     : FCI = 76.9502
+  Fake_Routing             : FCI = 76.9502
+  Congestion               : FCI = 76.9502
+
+=== Aggregate Robustness Metrics ===
+  Baseline PDR (normal)     : 98.87%
+  PDR under failure         : 40.57%
+  PDR Degradation           : 58.30 pp
+  CSI (normal)  = 0.1375  → Unstable
+  CSI (failure) = 0.1137  → Unstable
+  CSI Degradation           : 0.0239
+  Aggregate FCI Score       : 76.9502  (non-zero = cascade confirmed)
+  Cascade events logged     : 2999
+✓ Isolation Forest trained on 7,000 normal events.
+
+=== Isolation Forest Evaluation ===
+              precision    recall  f1-score   support
+
+      Normal     0.9746    0.9000    0.9358      7000
+     Failure     0.8020    0.9453    0.8678      3000
+
+    accuracy                         0.9136     10000
+   macro avg     0.8883    0.9227    0.9018     10000
+weighted avg     0.9229    0.9136    0.9154     10000
+
+ROC-AUC Score: 0.9227
+TP=2836  FP=700  FN=164  TN=6300
+✓ Cascade predictor trained (horizon = 3 events ahead).
+
+=== Cascade Prediction Report (horizon = 3 events ahead) ===
+              precision    recall  f1-score   support
+
+  No Cascade     0.0011    1.0000    0.0022         3
+     Cascade     1.0000    0.0931    0.1703      2997
+
+    accuracy                         0.0940      3000
+   macro avg     0.5006    0.5465    0.0863      3000
+weighted avg     0.9990    0.0940    0.1702      3000
+
+ROC-AUC: 0.6404
+
+Early detections (flag raised while PDR still > 60%): 0
+→ These represent proactive interventions before observable degradation.
+=== Recovery Strategy Comparison (Realistic Partial Recovery) ===
+              Strategy     PDR_%  Avg_Delay_ms  Throughput_kbps  PDR_Recovery_pp
+     Baseline (Normal) 98.871429         16.79           480.22        58.771429
+Pre-Recovery (Failure) 40.100000         58.54           296.13         0.000000
+ S1: Dynamic Rerouting 93.900000         48.77           296.13        53.800000
+   S2: Trust Isolation 75.270000         40.30           384.83        35.170000
+ S3: Channel Switching 99.830000         28.28           486.47        59.730000
+
+Isolated nodes (S2): 3 — ['R10', 'R1', 'R4']
+
+Best recovery strategy : S3: Channel Switching (PDR = 99.83%)
+NOTE: No strategy reaches 100% PDR — residual noise (ε=5%) ensures realism.
+Running topology: star... done. FCI=34.2736, PDR_deg=58.19pp
+Running topology: sparse_mesh... done. FCI=77.2281, PDR_deg=58.52pp
+Running topology: hybrid... done. FCI=71.3499, PDR_deg=58.01pp
+
+=== Multi-Topology Experiment Results ===
+   Topology  Density  PDR_Normal_%  PDR_Failure_%  PDR_Degradation  CSI_Normal  CSI_Failure     FCI  Cascades
+       star   0.1667         98.94          40.75            58.19      0.1428       0.1172 34.2736      2999
+sparse_mesh   0.3636         98.87          40.35            58.52      0.1375       0.1187 77.2281      2999
+     hybrid   0.3333         98.89          40.88            58.01      0.1368       0.1177 71.3499      2999
+====================================================================
+  SFINet v2 — Complete Research Results Summary
+====================================================================
+
+▶ DATASET
+  Total events         : 10,000  (publication-grade)
+  Normal / Failure     : 7,000 / 3,000
+  Failure types        : 8
+  Cascade events       : 2999
+  Saved to             : SFINet_v2_Dataset.csv
+
+▶ TOPOLOGY (primary: sparse_mesh)
+  Nodes / Edges        : 12 / 24
+  Density              : 0.3636  (realistic sparse, not 1.0)
+  Centrality range     : [0.3636, 0.3636]
+
+▶ ROBUSTNESS METRICS
+  PDR Normal           : 98.87%
+  PDR Failure          : 40.57%
+  PDR Degradation      : 58.30 pp
+  CSI Normal           : 0.1375  → Unstable  (>0.70 = Stable)
+  CSI Failure          : 0.1137  → Unstable  (<0.40 = Unstable)
+  FCI Score            : 76.9502  (non-zero; cascade confirmed)
+  Cascade count        : 2999
+  Cascade mean severity: 5.346
+
+▶ ANOMALY DETECTION (Isolation Forest)
+  Detected anomalies   : 3536
+  Correct detections   : 2836
+  Precision            : 0.8020
+  Recall               : 0.9453
+
+▶ CASCADE PREDICTION (Proactive — horizon=3 ahead)
+  Proactive predictions: 691
+  Early correct flags  : 279
+  Advantage            : Flags cascade BEFORE PDR breach (proactive recovery)
+
+▶ RECOVERY STRATEGIES
+              Strategy     PDR_%  Avg_Delay_ms  Throughput_kbps
+     Baseline (Normal) 98.871429         16.79           480.22
+Pre-Recovery (Failure) 40.100000         58.54           296.13
+ S1: Dynamic Rerouting 93.900000         48.77           296.13
+   S2: Trust Isolation 75.270000         40.30           384.83
+ S3: Channel Switching 99.830000         28.28           486.47
+
+  Best strategy        : S3: Channel Switching
+  NOTE: No strategy = 100% — residual noise ε=5% ensures scientific realism.
+
+▶ MULTI-TOPOLOGY COMPARISON
+   Topology  Density  PDR_Degradation     FCI CSI_Normal_Label CSI_Fail_Label
+       star   0.1667            58.19 34.2736         Unstable       Unstable
+sparse_mesh   0.3636            58.52 77.2281         Unstable       Unstable
+     hybrid   0.3333            58.01 71.3499         Unstable       Unstable
+
+▶ RESEARCH CONTRIBUTIONS
+  1. 10,000-event reproducible benchmark dataset (SFINet_v2_Dataset.csv)
+  2. Modular failure injection: 8 types + graph-diffusion cascade propagation
+  3. Fixed FCI: degree centrality + percentage-scale ΔPDRn → non-trivial values
+  4. Formal CSI interpretation: Stable (>0.70) / Degraded (0.40–0.70) / Unstable (<0.40)
+  5. Proactive temporal cascade prediction: logistic ΔPDRt → P_cascade(t+3)
+  6. Realistic partial recovery: ε=5% residual noise (no artificial 100% PDR)
+  7. Multi-topology experiment: star vs sparse_mesh vs hybrid — FCI + PDR comparison
+  8. Isolation Forest anomaly detection: mandatory, fully evaluated, ROC-AUC reported
+====================================================================

@@ -1,4 +1,3 @@
-# SFINet v2
 ## Synthetic Failure Injection Framework for Robustness Analysis in Multi-Robot Communication Networks
 
 SFINet v2 is a lightweight, Python-native research framework for analyzing communication robustness, failure propagation, anomaly detection, and adaptive recovery in multi-robot communication systems.
